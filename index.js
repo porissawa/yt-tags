@@ -2,9 +2,8 @@ const axios = require('axios')
 const he = require('he')
 
 const fetchVideoTags = async videoId => {
-  const content = await axios.get(`https://youtube.com/watch?v=${videoId}`)
-
   try {
+    const content = await axios.get(`https://youtube.com/watch?v=${videoId}`)
     return parseVideoMetadata(content)
   } catch(error) {
     return error
@@ -12,8 +11,8 @@ const fetchVideoTags = async videoId => {
 }
 
 const fetchChannelVideoIdList = async channelUrl => {
-  const res = await axios.get(channelUrl)
-    try {
+  try {
+      const res = await axios.get(channelUrl)
       const videoIds = parseVideoIdList(res)
       return Promise.all(Array.from(videoIds).map(async ids => await fetchVideoTags(ids)))
     } catch(error) {
